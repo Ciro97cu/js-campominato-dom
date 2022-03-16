@@ -57,9 +57,8 @@ function generateGrid(totalCells, dimensionCells) {
                 }
                 console.log(yourScore);
                 let scoreScreen = document.querySelector(".score");
-                scoreScreen.innerHTML = `Punteggio: ${yourScore} %`;
+                scoreScreen.innerHTML = `Hai cliccato: ${click} volte - Punteggio: ${yourScore} %`;
                 cell.classList.add("bgc-sky");
-
             }
         })
 
