@@ -34,10 +34,7 @@ function generateGrid(totalCells, dimensionCells) {
         cell.classList.add(dimensionCells);
         grid.appendChild(cell);
         cell.innerText = i + 1;
-
-        cell.addEventListener("click", () => {
-            cell.classList.add("bgc-sky");
-        })
+        cell.id = "cell-" + (i + 1);
     }
 
 }
@@ -56,7 +53,6 @@ function generatorBombs(totalCells) {
         }
         arrayBombsNumbers.push(numberOfTheBombs);
     }
-    console.log(arrayBombsNumbers);
     return arrayBombsNumbers;
 }
 
@@ -68,19 +64,43 @@ const buttonHard = document.querySelector("#hard");
 const grid = document.querySelector("#grid");
 
 buttonEasy.addEventListener("click", () => {
+
+    let bombsposition = generatorBombs(100);
+    console.log(bombsposition);
+
+    for (let i = 1; i <= 100; i++) {
+
+        let cell = document.getElementById("#cell-" + i);
+        console.log(cell);
+
+        cell.addEventListener("click", () => {
+            let bombOrNot = bombsposition.includes(i);
+
+            if (bombOrNot) {
+                cell.classList.add("bgc-sky");
+            } else {
+                cell.classList.add("bgc-red");
+            }
+
+        })
+
+    }
+
     generateGrid(100, "cell-easy");
-    generatorBombs(100);
 }
 )
 
 buttonMedium.addEventListener("click", () => {
     generateGrid(81, "cell-medium");
-    generatorBombs(81);
+    let bombsposition = generatorBombs(81);
+    console.log(bombsposition);
+
 }
 )
 
 buttonHard.addEventListener("click", () => {
     generateGrid(49, "cell-hard");
-    generatorBombs(49);
+    let bombsposition = generatorBombs(49);
+    console.log(bombsposition);
 }
 )
