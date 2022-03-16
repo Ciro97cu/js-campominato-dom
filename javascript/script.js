@@ -29,6 +29,7 @@ function generateGrid(totalCells, dimensionCells) {
     const numberCells = totalCells;
     grid.innerHTML = "";
     grid.classList.remove("block-click");
+    gameOver.classList.add("d-none");
     let bombsposition = generatorBombs(totalCells);
     console.log(bombsposition);
     for (let i = 0; i < numberCells; i++) {
@@ -94,5 +95,5 @@ buttonHard.addEventListener("click", () => {
 
 restartButton.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
-    gameOver.classList.toggle("d-none");
+    gameOver.classList.add("d-none");
 })
