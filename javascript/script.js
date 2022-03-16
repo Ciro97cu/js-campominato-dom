@@ -24,6 +24,7 @@ con difficoltà 2 => tra 1 e 81
 con difficoltà 3 => tra 1 e 49 */
 
 // ~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~
+
 function generateGrid(totalCells, dimensionCells) {
     const numberCells = totalCells;
     grid.innerHTML = "";
@@ -33,14 +34,17 @@ function generateGrid(totalCells, dimensionCells) {
         cell.classList.add(dimensionCells);
         grid.appendChild(cell);
         cell.innerText = i + 1;
-        cell.addEventListener("click", () => cell.classList.add("bgc-sky"));
+
+        cell.addEventListener("click", () => {
+            cell.classList.add("bgc-sky");
+        })
     }
+
 }
 
 function generatorRandomNumber(min, max) {
     range = max - min + 1;
     return Math.floor(Math.random() * range) + min;
-
 }
 
 function generatorBombs(totalCells) {
@@ -53,7 +57,9 @@ function generatorBombs(totalCells) {
         arrayBombsNumbers.push(numberOfTheBombs);
     }
     console.log(arrayBombsNumbers);
+    return arrayBombsNumbers;
 }
+
 // ~~~~~~~~~~ END FUNCTIONS ~~~~~~~~~~
 
 const buttonEasy = document.querySelector("#easy");
@@ -63,18 +69,18 @@ const grid = document.querySelector("#grid");
 
 buttonEasy.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
-    generatorBombs(100)
+    generatorBombs(100);
 }
 )
 
 buttonMedium.addEventListener("click", () => {
     generateGrid(81, "cell-medium");
-    generatorBombs(81)
+    generatorBombs(81);
 }
 )
 
 buttonHard.addEventListener("click", () => {
     generateGrid(49, "cell-hard");
-    generatorBombs(49)
+    generatorBombs(49);
 }
 )
