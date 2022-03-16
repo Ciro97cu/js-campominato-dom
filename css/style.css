@@ -81,7 +81,8 @@ div.buttons {
     background-color: crimson;
 }
 
-.game-over {
+.game-over,
+.you-win {
     background-color: gold;
     border: 2px solid black;
     padding: 20px 50px;
@@ -94,12 +95,20 @@ div.buttons {
 .game-over > h1 {
     color: crimson;
 }
+.you-win > h1 {
+    color: green;
+}
 
-.game-over > button {
+.game-over > button,
+.you-win > button {
     padding: 5px 15px;
     cursor: pointer;
     background-color: crimson;
     border: 2px solid lightgray;
+}
+
+.you-win > button {
+    background-color: green;
 }
 
 .game-over > button:active {
@@ -111,6 +120,11 @@ div.buttons {
 
 .game-over > button:hover {
     box-shadow: inset 0 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.score {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .d-none {

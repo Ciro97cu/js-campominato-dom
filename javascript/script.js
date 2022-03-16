@@ -32,6 +32,7 @@ function generateGrid(totalCells, dimensionCells) {
     gameOver.classList.add("d-none");
     let bombsposition = generatorBombs(totalCells);
     console.log(bombsposition);
+    let click = 0;
     for (let i = 0; i < numberCells; i++) {
         let cell = document.createElement("div");
         cell.classList.add("cell");
@@ -45,11 +46,26 @@ function generateGrid(totalCells, dimensionCells) {
                 gameOver.classList.toggle("d-none");
                 grid.classList.toggle("block-click");
             } else {
+
+                click += 1;
+                console.log(click);
+                let score = 100 / (totalCells - 16);
+                let yourScore = (score * click).toFixed(2);
+                if (yourScore === 100) {
+                    youWin.classList.toggle("d-none");
+                    grid.classList.toggle("block-click");
+                }
+                console.log(yourScore);
+                let scoreScreen = document.querySelector(".score");
+                scoreScreen.innerHTML = `Punteggio: ${yourScore} %`;
                 cell.classList.add("bgc-sky");
+
             }
         })
 
+
     }
+
 
 }
 
@@ -76,7 +92,9 @@ const buttonMedium = document.querySelector("#medium");
 const buttonHard = document.querySelector("#hard");
 const grid = document.querySelector("#grid");
 const gameOver = document.querySelector(".game-over");
-const restartButton = document.querySelector(".restart");
+const youWin = document.querySelector(".you-win");
+const restartButtonG = document.querySelector(".game-over .restart");
+const restartButtonW = document.querySelector(".you-win .restart");
 
 buttonEasy.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
@@ -93,7 +111,12 @@ buttonHard.addEventListener("click", () => {
 }
 )
 
-restartButton.addEventListener("click", () => {
+restartButtonG.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
     gameOver.classList.add("d-none");
+})
+
+restartButtonW.addEventListener("click", () => {
+    generateGrid(100, "cell-easy");
+    youWin.classList.add("d-none");
 })
