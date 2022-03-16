@@ -38,6 +38,10 @@ div.buttons {
     border-right: 2px solid darkgray;
 }
 
+.buttons > *:hover {
+    box-shadow: inset 0 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
 #grid {
     background-color: gold;
     height: 500px;
