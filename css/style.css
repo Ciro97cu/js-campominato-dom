@@ -1,0 +1,74 @@
+body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    margin-top: 50px;
+    background-color: white;
+}
+
+h1 {
+    font-size: 50px;
+    color: gold;
+    text-shadow: 0 0 10px gold;
+}
+
+h2 {
+    font-size: 30px;
+    color: gold;
+    text-shadow: 0 0 10px gold;
+}
+
+div.buttons {
+    display: flex;
+    column-gap: 20px;
+}
+
+.buttons > * {
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: gold;
+    border: 2px solid lightgray;
+}
+
+.buttons > *:active {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid darkgray;
+    border-right: 2px solid darkgray;
+}
+
+#grid {
+    background-color: gold;
+    height: 500px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cell-easy {
+    width: calc(100% / 10);
+    aspect-ratio: 1;
+}
+
+.cell-medium {
+    width: calc(100% / 9);
+    aspect-ratio: 1;
+}
+
+.cell-hard {
+    width: calc(100% / 7);
+    aspect-ratio: 1;
+}
+
+.bgc-sky {
+    background-color: skyblue;
+}
