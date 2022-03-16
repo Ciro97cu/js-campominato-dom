@@ -1,17 +1,29 @@
 /* Consegna
-creare una griglia di gioco quadrata, 
-in cui ogni cella contiene un numero tra quelli compresi 
-in un range compreso tra 1 e 100
-Quando l'utente clicca su ogni cella, la cella cliccata si colora di azzurro.
+Copiamo la griglia fatta ieri nella nuova repo e aggiungiamo la logica del gioco 
+Viene generata una griglia di gioco quadrata,
+in cui ogni cella contiene un numero tra quelli compresi nel range 1-100.
+Il computer deve generare 16 numeri casuali
+nello stesso range della difficoltà prescelta: le bombe.
+I numeri nella lista delle bombe non possono essere duplicati.
+In seguito l'utente clicca su una cella: 
+se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - 
+la cella si colora di rosso e la partita termina,
+altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+La partita termina quando il giocatore clicca su una bomba 
+o raggiunge il numero massimo possibile di numeri consentiti.
+Al termine della partita il software deve comunicare il punteggio,
+cioè il numero di volte che l’utente ha cliccato su una cella che non era una b.
 
 BONUS:
-L'utente indica un livello di difficoltà,
-in base al livello scelto la griglia conterrà un range diverso:
+1- quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle
+2- quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste
+3- L'utente indica un livello di difficoltà in base al quale viene generata una griglia di gioco quadrata,
+in cui ogni cella contiene un numero tra quelli compresi in un range:
 con difficoltà 1 => tra 1 e 100
 con difficoltà 2 => tra 1 e 81
 con difficoltà 3 => tra 1 e 49 */
 
-// FUNZIONI
+// ~~~~~~~~~~ FUNZIONI ~~~~~~~~~~
 function generateGrid(rowCell, columnCell, dimensionCells) {
     let rows = rowCell;
     let columns = columnCell;
@@ -25,11 +37,8 @@ function generateGrid(rowCell, columnCell, dimensionCells) {
         cell.innerText = i + 1;
         cell.addEventListener("click", () => cell.classList.add("bgc-sky"));
     }
-
 }
-// creao l'elemento div da andare in seguito ad inserire nel tag div con id grid
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~ FINE FUNZIONI ~~~~~~~~~~
 
 const buttonEasy = document.querySelector("#easy");
 const buttonMedium = document.querySelector("#medium");
