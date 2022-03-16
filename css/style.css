@@ -7,7 +7,7 @@ body {
     background-color: white;
 }
 
-h1 {
+body > h1 {
     font-size: 50px;
     color: gold;
     text-shadow: 0 0 10px gold;
@@ -79,4 +79,44 @@ div.buttons {
 
 .bgc-red {
     background-color: crimson;
+}
+
+.game-over {
+    background-color: gold;
+    border: 2px solid black;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+}
+
+.game-over > h1 {
+    color: crimson;
+}
+
+.game-over > button {
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: crimson;
+    border: 2px solid lightgray;
+}
+
+.game-over > button:active {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid darkgray;
+    border-right: 2px solid darkgray;
+}
+
+.game-over > button:hover {
+    box-shadow: inset 0 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.d-none {
+    display: none;
+}
+
+.block-click{
+    pointer-events: none;
 }

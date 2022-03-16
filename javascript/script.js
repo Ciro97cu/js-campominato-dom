@@ -28,6 +28,7 @@ con difficoltà 3 => tra 1 e 49 */
 function generateGrid(totalCells, dimensionCells) {
     const numberCells = totalCells;
     grid.innerHTML = "";
+    grid.classList.remove("block-click");
     let bombsposition = generatorBombs(totalCells);
     console.log(bombsposition);
     for (let i = 0; i < numberCells; i++) {
@@ -37,16 +38,16 @@ function generateGrid(totalCells, dimensionCells) {
         grid.appendChild(cell);
         cell.innerText = i + 1;
         cell.addEventListener("click", () => {
-
-            let bombOrNot = bombsposition.includes(i);
-
+            let bombOrNot = bombsposition.includes(i + 1);
             if (bombOrNot) {
-                cell.classList.add("bgc-sky");
-            } else {
                 cell.classList.add("bgc-red");
+                gameOver.classList.toggle("d-none");
+                grid.classList.toggle("block-click");
+            } else {
+                cell.classList.add("bgc-sky");
             }
-
         })
+
     }
 
 }
@@ -67,13 +68,14 @@ function generatorBombs(totalCells) {
     }
     return arrayBombsNumbers;
 }
-
 // ~~~~~~~~~~ END FUNCTIONS ~~~~~~~~~~
 
 const buttonEasy = document.querySelector("#easy");
 const buttonMedium = document.querySelector("#medium");
 const buttonHard = document.querySelector("#hard");
 const grid = document.querySelector("#grid");
+const gameOver = document.querySelector(".game-over");
+const restartButton = document.querySelector(".restart");
 
 buttonEasy.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
@@ -89,3 +91,8 @@ buttonHard.addEventListener("click", () => {
     generateGrid(49, "cell-hard");
 }
 )
+
+restartButton.addEventListener("click", () => {
+    generateGrid(100, "cell-easy");
+    gameOver.classList.toggle("d-none");
+})
