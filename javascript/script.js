@@ -28,13 +28,25 @@ con difficoltà 3 => tra 1 e 49 */
 function generateGrid(totalCells, dimensionCells) {
     const numberCells = totalCells;
     grid.innerHTML = "";
+    let bombsposition = generatorBombs(totalCells);
+    console.log(bombsposition);
     for (let i = 0; i < numberCells; i++) {
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.classList.add(dimensionCells);
         grid.appendChild(cell);
         cell.innerText = i + 1;
-        cell.id = "cell-" + (i + 1);
+        cell.addEventListener("click", () => {
+
+            let bombOrNot = bombsposition.includes(i);
+
+            if (bombOrNot) {
+                cell.classList.add("bgc-sky");
+            } else {
+                cell.classList.add("bgc-red");
+            }
+
+        })
     }
 
 }
@@ -46,7 +58,7 @@ function generatorRandomNumber(min, max) {
 
 function generatorBombs(totalCells) {
     let arrayBombsNumbers = [];
-    for (let i = 0; i < 16; i++) {
+    for (let i = 1; i <= 16; i++) {
         let numberOfTheBombs = generatorRandomNumber(1, totalCells);
         while (arrayBombsNumbers.includes(numberOfTheBombs)) {
             numberOfTheBombs = generatorRandomNumber(1, totalCells);
@@ -64,43 +76,16 @@ const buttonHard = document.querySelector("#hard");
 const grid = document.querySelector("#grid");
 
 buttonEasy.addEventListener("click", () => {
-
-    let bombsposition = generatorBombs(100);
-    console.log(bombsposition);
-
-    for (let i = 1; i <= 100; i++) {
-
-        let cell = document.getElementById("#cell-" + i);
-        console.log(cell);
-
-        cell.addEventListener("click", () => {
-            let bombOrNot = bombsposition.includes(i);
-
-            if (bombOrNot) {
-                cell.classList.add("bgc-sky");
-            } else {
-                cell.classList.add("bgc-red");
-            }
-
-        })
-
-    }
-
     generateGrid(100, "cell-easy");
 }
 )
 
 buttonMedium.addEventListener("click", () => {
     generateGrid(81, "cell-medium");
-    let bombsposition = generatorBombs(81);
-    console.log(bombsposition);
-
 }
 )
 
 buttonHard.addEventListener("click", () => {
     generateGrid(49, "cell-hard");
-    let bombsposition = generatorBombs(49);
-    console.log(bombsposition);
 }
 )
