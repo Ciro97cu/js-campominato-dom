@@ -93,12 +93,9 @@ function generatorBombs(totalCells) {
 
 function clickOnCells(cell, bombsPosition, i, totalCells) {
 
-
-
     cell.addEventListener("click", () => {
         let bombOrNot = bombsPosition.includes(i + 1);
         if (bombOrNot) {
-            click = 0;
             const bomb = document.querySelectorAll(".cell");
             for (let i = 0; i < bomb.length; i++) {
                 if (bombsPosition.includes(i + 1)) {
@@ -108,18 +105,19 @@ function clickOnCells(cell, bombsPosition, i, totalCells) {
             }
             gameOver.classList.toggle("d-none");
             grid.classList.toggle("block-click");
-
+            click += 0;
         } else {
             cell.classList.add("bgc-sky");
             cell.classList.toggle("block-click");
-            scoreUser(totalCells);
+            click += 1;
         }
+        scoreUser(totalCells);
     })
 
 }
 
 function scoreUser(totalCells) {
-    click += 1;
+
     console.log(click);
     let score = 100 / (totalCells - 16);
     let yourScore = (score * click).toFixed(0);
