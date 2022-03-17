@@ -26,7 +26,8 @@ con difficoltà 3 => tra 1 e 49 */
 // ~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~
 
 function generateGrid(totalCells, dimensionCells) {
-    const numberCells = totalCells;
+    numberCells = totalCells;
+    prova = dimensionCells;
     // resetto la griglia la restart
     grid.innerHTML = "";
     // rimuovo il blocco del click quando restarto il gioco
@@ -39,6 +40,9 @@ function generateGrid(totalCells, dimensionCells) {
     /* ottengo e stampo la posizione delle bombe tramite
     la funzione che mi genera le bombe */
     let bombsPosition = generatorBombs(totalCells);
+    bombsPosition.sort(function (a, b) {
+        return a - b;
+    })
     console.log(bombsPosition);
 
     // ciclo tante volte quante caselle devo generare
@@ -94,7 +98,7 @@ function clickOnCells(cell, bombsPosition, i, totalCells) {
     cell.addEventListener("click", () => {
         let bombOrNot = bombsPosition.includes(i + 1);
         if (bombOrNot) {
-
+            click = 0;
             const bomb = document.querySelectorAll(".cell");
             for (let i = 0; i < bomb.length; i++) {
                 if (bombsPosition.includes(i + 1)) {
@@ -102,7 +106,6 @@ function clickOnCells(cell, bombsPosition, i, totalCells) {
                     bombCell.classList.add('bgc-red');
                 }
             }
-
             gameOver.classList.toggle("d-none");
             grid.classList.toggle("block-click");
 
@@ -120,14 +123,17 @@ function scoreUser(totalCells) {
     console.log(click);
     let score = 100 / (totalCells - 16);
     let yourScore = (score * click).toFixed(0);
-    if (yourScore === 100) {
+    if (click === 33) {
         youWin.classList.toggle("d-none");
         grid.classList.toggle("block-click");
     }
     console.log(yourScore);
     let scoreScreen = document.querySelector(".score");
+    let scoreScreenW = document.querySelector(".scorew");
     scoreScreen.innerHTML = `Hai cliccato: ${click} volte - Punteggio: ${yourScore} %`;
+    scoreScreenW.innerHTML = `Hai cliccato: ${click} volte - Punteggio: ${yourScore} %`;
     return yourScore;
+
 }
 // ~~~~~~~~~~ END FUNCTIONS ~~~~~~~~~~
 
@@ -139,7 +145,8 @@ const gameOver = document.querySelector(".game-over");
 const youWin = document.querySelector(".you-win");
 const restartButtonG = document.querySelector(".game-over .restart");
 const restartButtonW = document.querySelector(".you-win .restart");
-
+let numberCells = 0;
+let prova;
 let click = 0;
 
 buttonEasy.addEventListener("click", () => {
@@ -158,11 +165,11 @@ buttonHard.addEventListener("click", () => {
 )
 
 restartButtonG.addEventListener("click", () => {
-    generateGrid(100, "cell-easy");
+    generateGrid(numberCells, prova);
     gameOver.classList.add("d-none");
 })
 
 restartButtonW.addEventListener("click", () => {
-    generateGrid(100, "cell-easy");
+    generateGrid(numberCells, prova);
     youWin.classList.add("d-none");
 })
