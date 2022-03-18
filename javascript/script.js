@@ -26,8 +26,11 @@ con difficoltà 3 => tra 1 e 49 */
 // ~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~
 
 function generateGrid(totalCells, dimensionCells) {
+    // variabile utilizzata per settare e resettare il gioco al numero giusto di celle
     numberCells = totalCells;
-    prova = dimensionCells;
+    /* variabile utilizzata per resettare correttamente le dimensioni delle celle
+    alla difficoltà dell'ultima partita giocata */
+    restartDimensionCells = dimensionCells;
     // resetto la griglia la restart
     grid.innerHTML = "";
     // rimuovo il blocco del click quando restarto il gioco
@@ -40,9 +43,11 @@ function generateGrid(totalCells, dimensionCells) {
     /* ottengo e stampo la posizione delle bombe tramite
     la funzione che mi genera le bombe */
     let bombsPosition = generatorBombs(totalCells);
-    bombsPosition.sort(function (a, b) {
+
+    /* bombsPosition.sort(function (a, b) {
         return a - b;
-    })
+    }) */ // METODO PER ORDINARE I NUMERI ALL'INTERNO DELL'ARRAY
+
     console.log(bombsPosition);
 
     // ciclo tante volte quante caselle devo generare
@@ -59,7 +64,8 @@ function generateGrid(totalCells, dimensionCells) {
         grid.appendChild(cell);
         // inserisco all'interno di ogni cella un numero in maniera sequenziale
         cell.innerText = i + 1;
-
+        /* richiamo la funzione che mi consente di andare ad aggiungere
+        funzionalità al click su ogni cella */
         clickOnCells(cell, bombsPosition, i, totalCells);
 
     }
@@ -91,41 +97,72 @@ function generatorBombs(totalCells) {
     return arrayBombsNumbers;
 }
 
+/* funzione che mi consente di andare ad aggiungere
+funzionalità al click su ogni cella */
 function clickOnCells(cell, bombsPosition, i, totalCells) {
 
     cell.addEventListener("click", () => {
+        /* inizializzo una variabile e vado a verificare se l'array contiene al suo interno
+        una corrispondenza in base alla mia i + 1 */
         let bombOrNot = bombsPosition.includes(i + 1);
+        /* imposto una condizione in cui se la mia variabile è === true
+        allora siamo in presenza di una bomba */
         if (bombOrNot) {
+            /* vado a inizializzare una variabile che corrisponderà ad un array 
+            con tutti i miei elementi html che hanno come classe cell */
             const bomb = document.querySelectorAll(".cell");
             for (let i = 0; i < bomb.length; i++) {
+                /* vado a ciclare e imposto la condizione che se la posizione delle bombe
+                corrisponde al mio i + 1 vado a creare una variabile dove metto 
+                la posizione bomb[i] */
                 if (bombsPosition.includes(i + 1)) {
                     const bombCell = bomb[i];
+                    /* una volta ottenuta la posizione e messa nella mia variabile vado ad assegnare 
+                    la classe che da il background colore rosso per far scattare non solo la 
+                    cella su cui si clicca, ma tutte */
                     bombCell.classList.add('bgc-red');
                 }
             }
+            // se si clicca su una bomba vado a mostrare la finestra di game-over
             gameOver.classList.toggle("d-none");
+            // rimuovo la possibilità di poter ricliccare su qualsiasi altra cella
             grid.classList.toggle("block-click");
+            // al fine del calcolo del punteggio un click su una bomba non produrra nessun incremento di punti
             click += 0;
         } else {
+            // se invece clicchiamo su una casella buona vado ad aggiungere alla cella il colore azzurro
             cell.classList.add("bgc-sky");
+            /* al fine del calcolo del punteggio rimuovo la possibilità di poter ricliccare sulla
+            casella appena cliccata */
             cell.classList.toggle("block-click");
+            // un click su una casella buona produrra un incremento del punteggio di 1 punto
             click += 1;
         }
+        // lancio la funzione per calcolare il punteggio dell'utente
         scoreUser(totalCells);
     })
 
 }
 
+// funzione per calcolare il punteggio dell'utente
 function scoreUser(totalCells) {
-
+    // stampo i click effettuati in console
     console.log(click);
+    // calcolo il punteggio in base al numero totale di celle per ogni livello
     let score = 100 / (totalCells - 16);
+    /* moltiplico lo score appena calcolato in modo che sia in funzione dei click che andiamo ad effettuare
+    e per comodità arrotondo il numero in modo che non abbia cifre decimali */
     let yourScore = (score * click).toFixed(0);
-    if (click === 33) {
+    /* imposto la condizione che affinchè i click corrispondano a quelli massimi effettuabili
+    a seconda delle celle di ogni livello comparirà la schermata di vittoria */
+    if (click === (totalCells - 16)) {
         youWin.classList.toggle("d-none");
+        // come nel game-over blocco ulteriori click sulle celle della griglia una volta vinto
         grid.classList.toggle("block-click");
     }
+    // per comodità stampo in console anche il punteggio in percentuale
     console.log(yourScore);
+    // inizializzo due variabili per poi mandare a schermo lo score e i click effettuati
     let scoreScreen = document.querySelector(".score");
     let scoreScreenW = document.querySelector(".scorew");
     scoreScreen.innerHTML = `Hai cliccato: ${click} volte - Punteggio: ${yourScore} %`;
@@ -144,30 +181,35 @@ const youWin = document.querySelector(".you-win");
 const restartButtonG = document.querySelector(".game-over .restart");
 const restartButtonW = document.querySelector(".you-win .restart");
 let numberCells = 0;
-let prova;
+let restartDimensionCells;
 let click = 0;
 
+// evento al click sul bottone modalità facile
 buttonEasy.addEventListener("click", () => {
     generateGrid(100, "cell-easy");
 }
 )
 
+// evento al click sul bottone modalità media
 buttonMedium.addEventListener("click", () => {
     generateGrid(81, "cell-medium");
 }
 )
 
+// evento al click sul bottone modalità difficile
 buttonHard.addEventListener("click", () => {
     generateGrid(49, "cell-hard");
 }
 )
 
+// evento al click sul bottone restart al game-over
 restartButtonG.addEventListener("click", () => {
-    generateGrid(numberCells, prova);
+    generateGrid(numberCells, restartDimensionCells);
     gameOver.classList.add("d-none");
 })
 
+// evento al click sul bottone restart alla vittoria
 restartButtonW.addEventListener("click", () => {
-    generateGrid(numberCells, prova);
+    generateGrid(numberCells, restartDimensionCells);
     youWin.classList.add("d-none");
 })
